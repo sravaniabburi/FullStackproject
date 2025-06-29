@@ -1,0 +1,275 @@
+:root {
+  --primary: #ff6b35;
+  --primary-dark: #d64933;
+  --dark: #0f172a;
+  --darker: #020617;
+  --light: #ffffff;
+  --gray: #64748b;
+  --light-gray: #e2e8f0;
+  --error: #ef4444;
+  --success: #22c55e;
+  --accent: #fbbf24;
+  --secondary: #1e293b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  /* This linear gradient acts as the base background color */
+  background: linear-gradient(135deg, #020617 0%, #0f172a 25%, #1e293b 50%, #374151 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--light);
+  padding: 20px;
+
+  /* --- MODIFICATIONS FOR BACKGROUND IMAGE START HERE --- */
+
+  /*
+   * Multiple background images/gradients are listed here, separated by commas.
+   * The order matters: the first one is on top, the last one is at the bottom.
+   * We place 'images.jpg' last so your radial gradients layer on top of it.
+   */
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+    url('image1.jpeg'); /* Your background image. Ensure 'images.jpg' is in the 'frontend' directory, next to this CSS file. */
+
+  /*
+   * These properties apply to EACH background layer, in the same order as declared above.
+   * We need to specify 'cover' and 'center' for each radial gradient and the image.
+   * 'no-repeat' is crucial for the radial gradients to prevent them from tiling.
+   */
+  background-size: cover, cover, cover, cover;
+  background-position: center, center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed; /* Keeps the background fixed while content potentially scrolls */
+
+  /*
+   * This property defines how the background layers blend with each other.
+   * 'overlay' is a good starting point for integrating the gradients with the image.
+   * Experiment with: 'multiply', 'screen', 'darken', 'lighten', 'color-burn', 'color-dodge', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity', 'soft-light', 'hard-light'.
+   * If you don't want any blending, you can remove this line.
+   */
+  background-blend-mode: overlay;
+
+  /* --- MODIFICATIONS FOR BACKGROUND IMAGE END HERE --- */
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+
+.form-box {
+  /* The form box itself is semi-transparent, allowing the background to show through it */
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.95) 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 0 40px rgba(255, 107, 53, 0.2),
+    0 0 80px rgba(251, 191, 36, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+  position: absolute; /* Ensures boxes can animate in/out without affecting layout flow */
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  backdrop-filter: blur(20px); /* Creates a frosted glass effect over the background */
+  border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.form-box.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  position: relative; /* Becomes relative when active to take up space in the flow */
+}
+
+.form-content {
+  padding: 2.5rem;
+  position: relative;
+}
+
+.form-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: translateX(-50%);
+  border-radius: 0 0 2px 2px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text; /* For text gradient effect */
+  -webkit-text-fill-color: transparent; /* For text gradient effect */
+  background-clip: text; /* Standard for text gradient effect */
+  text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.5); /* Semi-transparent input background */
+  color: var(--light);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px); /* Frosted effect for inputs */
+}
+
+input::placeholder {
+  color: var(--gray);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 3px rgba(255, 107, 53, 0.2),
+    0 0 20px rgba(255, 107, 53, 0.1);
+  background: rgba(15, 23, 42, 0.7); /* Slightly less transparent on focus */
+  transform: translateY(-1px);
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #0f172a; /* Dark text on bright button */
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden; /* For the hover shimmer effect */
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: var(--light-gray);
+}
+
+.form-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.form-footer a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.form-footer a:hover::after {
+  width: 100%;
+}
+
+.form-footer a:hover {
+  color: var(--accent);
+}
+
+.message {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.message.error {
+  color: var(--error);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.message.success {
+  color: var(--success);
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.g-recaptcha {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  filter: brightness(1.1) contrast(1.1);
+}
+
+@media (max-width: 480px) {
+  .form-content {
+    padding: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+}
